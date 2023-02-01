@@ -13,7 +13,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Color backGroundColor =  Colors.white;
+  Color backGroundColor = Colors.white;
   Color textBackGroundColor = Colors.white;
   Color textColor = Colors.black;
   Color? selectedColor;
@@ -81,7 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 if (selectedColor != null) {
                   setState(() {
                     backGroundColor = selectedColor!;
-                    textBackGroundColor = ColorProcessor.changeDarkness(0.6, backGroundColor);
+                    textBackGroundColor =
+                        ColorProcessor.changeDarkness(0.6, backGroundColor);
                   });
                 } else {
                   selectedColor = backGroundColor;
@@ -95,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void _resetSelectedColor () {
+  void _resetSelectedColor() {
     setState(() {
       selectedColor = null;
     });
@@ -104,84 +105,88 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          actions: <Widget>[
-        Center(
-          child: ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.blueGrey),
-            icon: Icon(
-              Icons.colorize_rounded,
-              color: Colors.white,
-            ),
-            label: const Text('Change color range'),
-            onPressed: () {
-              _initializeColorPicker();
-            },
-          ),
-        ),
-        Center(
-          child: ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.blueGrey),
-            icon: Icon(
-              Icons.format_color_reset_rounded,
-              color: Colors.white,
-            ),
-            label: const Text('Reset color'),
-            onPressed: () {
-              _resetSelectedColor();
-
-              Widget okButton = TextButton(
-                child: Text("OK"),
-                onPressed: () {Navigator.pop(context);},
-              );
-
-              // set up the AlertDialog
-              AlertDialog alert = AlertDialog(
-                title: Text("Nice!"),
-                content: const Text("Now colors generate without restrictions! "),
-                actions: [
-                  okButton,
-                ],
-              );
-
-              // show the dialog
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return alert;
-                },
-              );
-            },
-          ),
-        ),
-      ]),
-      backgroundColor: backGroundColor,
-      body: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTapDown: (details) {
-          if (colorGenerator == null) {
-            final tapPosition = details.globalPosition;
-            _initializeColorGenerator(
-                (tapPosition.dx * defaultMultiplier).toInt(),
-                (tapPosition.dy.toInt() * defaultMultiplier).toInt());
-          }
-          _changeBackGroundColorRandomly();
-        },
-        child: Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+        appBar: AppBar(
+            title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                Text('Hey there', style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    background: Paint()
-                      ..strokeWidth = 25.0
-                      ..color = textBackGroundColor
-                      ..style = PaintingStyle.stroke
-                      ..strokeJoin = StrokeJoin.round))
-        ],
-      ),
-    ),)
-    );
+              ElevatedButton.icon(
+                style:
+                    ElevatedButton.styleFrom(backgroundColor: Colors.blueGrey),
+                icon: Icon(
+                  Icons.colorize_rounded,
+                  color: Colors.white,
+                ),
+                label: const Text('Change color range'),
+                onPressed: () {
+                  _initializeColorPicker();
+                },
+              ),
+              ElevatedButton.icon(
+                style:
+                    ElevatedButton.styleFrom(backgroundColor: Colors.blueGrey),
+                icon: Icon(
+                  Icons.format_color_reset_rounded,
+                  color: Colors.white,
+                ),
+                label: const Text('Reset color'),
+                onPressed: () {
+                  _resetSelectedColor();
+
+                  Widget okButton = TextButton(
+                    child: Text("OK"),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  );
+
+                  // set up the AlertDialog
+                  AlertDialog alert = AlertDialog(
+                    title: Text("Nice!"),
+                    content: const Text(
+                        "Now colors generate without restrictions! "),
+                    actions: [
+                      okButton,
+                    ],
+                  );
+
+                  // show the dialog
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return alert;
+                    },
+                  );
+                },
+              ),
+            ])),
+        backgroundColor: backGroundColor,
+        body: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTapDown: (details) {
+            if (colorGenerator == null) {
+              final tapPosition = details.globalPosition;
+              _initializeColorGenerator(
+                  (tapPosition.dx * defaultMultiplier).toInt(),
+                  (tapPosition.dy.toInt() * defaultMultiplier).toInt());
+            }
+            _changeBackGroundColorRandomly();
+          },
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('Hey there',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        background: Paint()
+                          ..strokeWidth = 25.0
+                          ..color = textBackGroundColor
+                          ..style = PaintingStyle.stroke
+                          ..strokeJoin = StrokeJoin.round))
+              ],
+            ),
+          ),
+        ));
   }
 }
