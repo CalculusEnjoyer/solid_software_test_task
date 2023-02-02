@@ -1,4 +1,4 @@
-# Solid Software Test Task
+# Random Color Test Task
 ## Task overview
 Make an application that randomly changes its color after taping on screen (without using external libraries for color generation).
 ## Implementation details
@@ -43,7 +43,7 @@ Make an application that randomly changes its color after taping on screen (with
                 my_lc_random.dart
 ```
 ## App demo
-<img src="https://github.com/CalculusEnjoyer/solid_software_test_task/blob/master/gif_demo/work_example.gif" width="320">
+<img src="https://github.com/CalculusEnjoyer/volodymyr_kravchuk_test_task/blob/master/gif_demo/work_example.gif" width="320">
 
 
 Thank you very much for your review and I am looking
