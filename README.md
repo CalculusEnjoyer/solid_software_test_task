@@ -43,6 +43,8 @@ Make an application that randomly changes its color after taping on screen (with
                 my_lc_random.dart
 ```
 ## App demo
-![](https://github.com/CalculusEnjoyer/solid_software_test_task/blob/master/gif_demo/work_example.gif)
+<img src="https://github.com/CalculusEnjoyer/solid_software_test_task/blob/master/gif_demo/work_example.gif" width="320">
+
+
 Thank you very much for your review and I am looking
 forward to hearing from you ^_^
