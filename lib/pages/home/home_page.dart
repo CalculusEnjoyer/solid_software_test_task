@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:solid_software_test_task/pages/common_wigdets/app_alert_dialog.dart';
+import 'package:solid_software_test_task/pages/common_wigdets/app_elevated_button.dart';
 import 'package:solid_software_test_task/pages/common_wigdets/app_text_style.dart';
 import 'package:solid_software_test_task/utils/colors/color_generator.dart';
 import 'package:solid_software_test_task/utils/colors/color_processor.dart';
@@ -14,14 +15,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Color backGroundColor = Colors.white;
+  Color backGroundColor = Colors.grey;
   Color textBackGroundColor = Colors.white;
   Color textColor = Colors.black;
   final double fontSize = 40;
-  final double _defaultLightnessCoefficient = 0.6;
-  final int defaultFirstSeed = 0xFd31FDA;
-  final int defaultSecondSeed = 0xF2dCa213;
-  final int defaultMultiplier = 0x989680;
+  final double _defaultLightnessCoefficient = 0.2;
+  final int _defaultMultiplier = 0x989680;
   ColorGenerator? colorGenerator;
   Color? selectedColor;
 
@@ -31,9 +30,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _changeBackGroundColorRandomly() {
-    if (colorGenerator == null) {
-      _initializeColorGenerator(defaultFirstSeed, defaultSecondSeed);
-    }
+    colorGenerator ??= ColorGenerator(MyFibonacciRandom());
 
     setState(() {
       if (selectedColor != null) {
@@ -42,8 +39,7 @@ class _HomePageState extends State<HomePage> {
           selectedColor!,
         );
       } else {
-        backGroundColor =
-            colorGenerator!.generateColor(0, ColorGenerator.maxColorRange);
+        backGroundColor = colorGenerator!.generateFullyOpaqueColor();
       }
       _updateTextColor();
     });
@@ -56,10 +52,10 @@ class _HomePageState extends State<HomePage> {
   void _updateTextColor() {
     setState(() {
       textBackGroundColor = ColorProcessor.changeLightness(
-        _defaultLightnessCoefficient,
+        ColorProcessor.getLightness(backGroundColor) - _defaultLightnessCoefficient,
         backGroundColor,
       );
-      textColor = ColorProcessor.getColorLightness(textBackGroundColor);
+      textColor = ColorProcessor.getContrastColor(textBackGroundColor);
     });
   }
 
@@ -80,41 +76,29 @@ class _HomePageState extends State<HomePage> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.blueGrey),
-              icon: const Icon(
-                Icons.colorize_rounded,
-                color: Colors.white,
-              ),
-              label: const Text('Change color range'),
-              onPressed: () {
-                _initializeColorPicker();
-              },
-            ),
+            AppElevatedButton(
+                text: 'Change color range',
+                onTapAction: _initializeColorPicker,
+                iconData: Icons.colorize_rounded),
 
-            ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.blueGrey),
-              icon: const Icon(
-                Icons.format_color_reset_rounded,
-                color: Colors.white,
-              ),
-              label: const Text('Reset color'),
-              onPressed: () {
-                _resetSelectedColor();
+            AppElevatedButton(
+                text: 'Reset color',
+                onTapAction: () {
+                  _resetSelectedColor();
 
-                showDialog<AlertDialog>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AppAlertDialog(
-                      label: 'Nice',
-                      text: 'Colors will generate without restrictions',
-                      buttonText: 'Ok',
-                      context: context,
-                    );
-                  },
-                );
-              },
-            ),
+                  showDialog<AlertDialog>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AppAlertDialog(
+                        label: 'Nice',
+                        text: 'Colors will generate without restrictions',
+                        buttonText: 'Ok',
+                        context: context,
+                      );
+                    },
+                  );
+                },
+                iconData: Icons.format_color_reset_rounded),
           ],
         ),
       ),
@@ -125,8 +109,8 @@ class _HomePageState extends State<HomePage> {
           if (colorGenerator == null) {
             final tapPosition = details.globalPosition;
             _initializeColorGenerator(
-              (tapPosition.dx * defaultMultiplier).toInt(),
-              (tapPosition.dy.toInt() * defaultMultiplier).toInt(),
+              (tapPosition.dx * _defaultMultiplier).toInt(),
+              (tapPosition.dy.toInt() * _defaultMultiplier).toInt(),
             );
           }
           _changeBackGroundColorRandomly();
@@ -138,9 +122,10 @@ class _HomePageState extends State<HomePage> {
               Text(
                 'Hey there',
                 style: AppTextStyle.getRoundedBackGound(
-                    fontSize: fontSize,
-                    backGroundColor: textBackGroundColor,
-                    textColor: textColor,),
+                  fontSize: fontSize,
+                  backGroundColor: textBackGroundColor,
+                  textColor: textColor,
+                ),
               )
             ],
           ),
@@ -159,24 +144,34 @@ class _HomePageState extends State<HomePage> {
           ),
           content: SingleChildScrollView(
             child: ColorPicker(
+              enableAlpha: false,
               pickerColor: backGroundColor,
               onColorChanged: _changeSelectedColor,
             ),
           ),
           actions: <Widget>[
-            ElevatedButton(
-              child: const Text('Got it'),
-              onPressed: () {
-                if (selectedColor != null) {
-                  setState(() {
-                    backGroundColor = selectedColor!;
-                    _updateTextColor();
-                  });
-                } else {
-                  selectedColor = backGroundColor;
-                }
-                Navigator.of(context).pop();
-              },
+            Center(
+              child: SizedBox(
+                width: 120,
+                child: ElevatedButton(
+                  child: const Text(
+                    'Got it',
+                    style: TextStyle(fontSize: 24),
+                  ),
+                  onPressed: () {
+                    if (selectedColor != null) {
+                      setState(() {
+                        backGroundColor = selectedColor!;
+                        _updateTextColor();
+                      });
+                    } else {
+                      selectedColor = backGroundColor;
+                    }
+                    print(selectedColor);
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
             ),
           ],
         );

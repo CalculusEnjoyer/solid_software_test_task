@@ -5,7 +5,7 @@ abstract class MyRandom {
   /// Generates random integer in [0, maxInt] range
   int getNextInt(int max);
 
-  /// Generates random double based on random generated int
+  /// Generates random double based on random generated integer
   double getNextDouble() {
     double result = getNextInt(MyRandom.maxInt).toDouble();
     while (result >= 1.0) {
