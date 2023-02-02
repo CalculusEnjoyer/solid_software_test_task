@@ -7,8 +7,8 @@ Make an application that randomly changes its color after taping on screen (with
   second one based on the Fibonacci sequence).
 * Using those generators ColorGenerator was implemented.
 ## Additional features
-* To increase the randomness of pseudorandom integers generators, [x;y] coordinates of the first tap
-  on the screen were used as the first and second seeds for the Fibonacci generator.
+* To increase the randomness of pseudorandom integers generators, **[x;y] coordinates of the first tap
+  on the screen** were used as the first and second seeds for the Fibonacci generator.
 * Added __Change color range__ button. Users can choose the color using a fancy color
   picker and after that, a generator will produce the same color of a different shade.
   In order to get back to complete random color generation user have to push __Reset__
