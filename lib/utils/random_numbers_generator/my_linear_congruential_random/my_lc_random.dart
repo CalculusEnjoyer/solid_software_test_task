@@ -1,25 +1,14 @@
-import '../my_random.dart';
+import 'package:solid_software_test_task/utils/random_numbers_generator/my_random.dart';
 
-class MyLCRandom implements MyRandom {
-  int seed;
-  int multiplier;
-  int increment;
+class MyLCRandom extends MyRandom {
+  int _seed;
+  final int _multiplier;
+  final int _increment;
 
-  MyLCRandom([this.seed = 1, this.multiplier = 1, this.increment = 1]);
-
-  // TODO dublicate code
-  @override
-  double getNextDouble() {
-    double result = getNextInt(MyRandom.maxInt).toDouble();
-    while (result >= 1.0) {
-      result /= 10;
-    }
-    return result;
-  }
+  MyLCRandom([this._seed = 1, this._multiplier = 1, this._increment = 1]);
 
   @override
   int getNextInt(int max) {
-    seed = (multiplier * seed + increment) % max;
-    return seed;
+    return _seed = (_multiplier * _seed + _increment) % max;
   }
 }
