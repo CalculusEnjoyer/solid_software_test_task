@@ -140,7 +140,7 @@ class _HomePageState extends State<HomePage> {
                 style: AppTextStyle.getRoundedBackGound(
                     fontSize: fontSize,
                     backGroundColor: textBackGroundColor,
-                    textColor: textColor),
+                    textColor: textColor,),
               )
             ],
           ),

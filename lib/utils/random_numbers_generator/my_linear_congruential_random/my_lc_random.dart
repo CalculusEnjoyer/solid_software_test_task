@@ -1,5 +1,6 @@
 import 'package:solid_software_test_task/utils/random_numbers_generator/my_random.dart';
 
+/// Random generator that uses Linear congruential generator algorithm
 class MyLCRandom extends MyRandom {
   int _seed;
   final int _multiplier;

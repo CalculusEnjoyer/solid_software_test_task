@@ -1,5 +1,6 @@
 import 'package:solid_software_test_task/utils/random_numbers_generator/my_random.dart';
 
+/// Random generator that uses Fibonacci sequence for computing numbers
 class MyFibonacciRandom extends MyRandom {
   int _firstNumber;
   int _secondNumber;

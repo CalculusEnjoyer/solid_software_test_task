@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+/// Class for computing util operations with color
 class ColorProcessor {
-  static
-  Color getColorLightness(Color backgroundColor) {
+
+  /// Determines if the color is dart or white
+  static Color getColorLightness(Color backgroundColor) {
     if (ThemeData.estimateBrightnessForColor(backgroundColor) ==
         Brightness.dark) {
       return Colors.white;
@@ -11,6 +13,7 @@ class ColorProcessor {
     return Colors.black;
   }
 
+  /// Changes the shade of the color without changing the color itself.
   static Color changeLightness (double coefficient, Color color) {
     print(coefficient);
     if (coefficient >= 0.5) {
