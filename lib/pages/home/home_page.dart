@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:solid_software_test_task/pages/common_wigdets/app_alert_dialog.dart';
+import 'package:solid_software_test_task/pages/common_wigdets/app_text_style.dart';
 import 'package:solid_software_test_task/utils/colors/color_generator.dart';
 import 'package:solid_software_test_task/utils/colors/color_processor.dart';
 import 'package:solid_software_test_task/utils/random_numbers_generator/my_fibonacci_random/my_fibonacci_random.dart';
@@ -15,6 +17,7 @@ class _HomePageState extends State<HomePage> {
   Color backGroundColor = Colors.white;
   Color textBackGroundColor = Colors.white;
   Color textColor = Colors.black;
+  final double fontSize = 40;
   final double _defaultLightnessCoefficient = 0.6;
   final int defaultFirstSeed = 0xFd31FDA;
   final int defaultSecondSeed = 0xF2dCa213;
@@ -88,6 +91,7 @@ class _HomePageState extends State<HomePage> {
                 _initializeColorPicker();
               },
             ),
+
             ElevatedButton.icon(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.blueGrey),
               icon: const Icon(
@@ -101,10 +105,11 @@ class _HomePageState extends State<HomePage> {
                 showDialog<AlertDialog>(
                   context: context,
                   builder: (BuildContext context) {
-                    return _buildAlertDialog(
+                    return AppAlertDialog(
                       label: 'Nice',
                       text: 'Colors will generate without restrictions',
                       buttonText: 'Ok',
+                      context: context,
                     );
                   },
                 );
@@ -132,15 +137,10 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               Text(
                 'Hey there',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 40,
-                  background: Paint()
-                    ..strokeWidth = 50.0
-                    ..color = textBackGroundColor
-                    ..style = PaintingStyle.stroke
-                    ..strokeJoin = StrokeJoin.round,
-                ),
+                style: AppTextStyle.getRoundedBackGound(
+                    fontSize: fontSize,
+                    backGroundColor: textBackGroundColor,
+                    textColor: textColor),
               )
             ],
           ),
@@ -149,31 +149,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  AlertDialog _buildAlertDialog({
-    required String label,
-    required String text,
-    required String buttonText,
-  }) {
-    final Widget okButton = TextButton(
-      child: Text(buttonText),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-
-    final AlertDialog alert = AlertDialog(
-      title: Text(label),
-      content: Text(text),
-      actions: [
-        okButton,
-      ],
-    );
-
-    return alert;
-  }
-
   void _initializeColorPicker() {
-    showDialog <AlertDialog>(
+    showDialog<AlertDialog>(
       context: context,
       builder: (context) {
         return AlertDialog(

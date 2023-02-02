@@ -16,7 +16,7 @@ class ColorGenerator {
     }
     final int value =
         randomGenerator.getNextInt(finalRange - startRange) + startRange;
-    print(value);
+
     return Color(value);
   }
 
