@@ -167,7 +167,6 @@ class _HomePageState extends State<HomePage> {
                     } else {
                       selectedColor = backGroundColor;
                     }
-                    print(selectedColor);
                     Navigator.of(context).pop();
                   },
                 ),
